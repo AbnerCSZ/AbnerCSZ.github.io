@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Shenzhou Chen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="其他配套配置：抓包pcap–用于将pcap的原始文件转化成ROS结构，要在velodyne驱动前安装。1sudo apt-get install libpcap-dev  velodyne驱动配置：Windows 以太网IPv4属性设置IP：192.168.1.77子网掩码：255.255.255.0默认网关：192.168.1.1 然后浏览器登陆192.168.1.201进入LIDAR界面 打开">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shenzhou Chen">
+<meta property="og:url" content="http://yoursite.com/2018/01/25/velodyne-VLP16在win和ubuntu_ROS下的配置/index.html">
+<meta property="og:site_name" content="Shenzhou Chen">
+<meta property="og:description" content="其他配套配置：抓包pcap–用于将pcap的原始文件转化成ROS结构，要在velodyne驱动前安装。1sudo apt-get install libpcap-dev  velodyne驱动配置：Windows 以太网IPv4属性设置IP：192.168.1.77子网掩码：255.255.255.0默认网关：192.168.1.1 然后浏览器登陆192.168.1.201进入LIDAR界面 打开">
+<meta property="og:image" content="http://img.blog.csdn.net/20171219104638455?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTM1NjMzNzA5Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-01-25T09:06:55.339Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Shenzhou Chen">
+<meta name="twitter:description" content="其他配套配置：抓包pcap–用于将pcap的原始文件转化成ROS结构，要在velodyne驱动前安装。1sudo apt-get install libpcap-dev  velodyne驱动配置：Windows 以太网IPv4属性设置IP：192.168.1.77子网掩码：255.255.255.0默认网关：192.168.1.1 然后浏览器登陆192.168.1.201进入LIDAR界面 打开">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20171219104638455?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTM1NjMzNzA5Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/atom.xml" title="Shenzhou Chen" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Shenzhou Chen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-velodyne-VLP16在win和ubuntu_ROS下的配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/25/velodyne-VLP16在win和ubuntu_ROS下的配置/" class="article-date">
+  <time datetime="2018-01-25T09:07:01.383Z" itemprop="datePublished">2018-01-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="其他配套配置："><a href="#其他配套配置：" class="headerlink" title="其他配套配置："></a>其他配套配置：</h1><p>抓包pcap–用于将pcap的原始文件转化成ROS结构，要在velodyne驱动前安装。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libpcap-dev</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="velodyne驱动配置："><a href="#velodyne驱动配置：" class="headerlink" title="velodyne驱动配置："></a>velodyne驱动配置：</h1><p>Windows</p>
+<p>以太网IPv4属性<br>设置IP：192.168.1.77<br>子网掩码：255.255.255.0<br>默认网关：192.168.1.1</p>
+<p>然后浏览器登陆192.168.1.201进入LIDAR界面</p>
+<p>打开U盘中的VeloView.exe ，Open Sensor Stream选择VLP16即可显示点云</p>
+<hr>
+<p>Linux</p>
+<p>以太网设置和Windows一样<br>保证浏览器登陆192.168.1.201可以进入LIDAR界面<br>下载ros下的velodyne驱动<a href="https://github.com/ros-drivers/velodyne" target="_blank" rel="noopener">ros-drivers/velodyne</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd catkin_ws/src</span><br><span class="line">git clone git@github.com:ros-drivers/velodyne.git</span><br><span class="line">cd ..</span><br><span class="line">catkin_make</span><br><span class="line">source devel/setup.bash</span><br></pre></td></tr></table></figure>
+<p>把Velodyne的xml文件（wiki中的VLP-16.xml）转化成yaml文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun velodyne_pointcloud gen_calibration.py /dir/VLP-16.xml</span><br></pre></td></tr></table></figure>
+<p>然后运行launch并显示点云：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">roslaunch velodyne_pointcloud VLP16_points.launch calibration:=/dir/VLP-16.yaml</span><br><span class="line">rosrun rviz rviz</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="http://img.blog.csdn.net/20171219104638455?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTM1NjMzNzA5Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="velodyne_ros_test"></p>
+<hr>
+<h1 id="velodyne数据结构"><a href="#velodyne数据结构" class="headerlink" title="velodyne数据结构"></a>velodyne数据结构</h1><p>The VLP-16 outputs two types of UDP Ethernet packets: Data Packets and Position Packets.</p>
+<p> Data Packets</p>
+<p>12个100位的data+其他。data包括flag, azimuth, 32个（2位距离+1位reflectivity）–Data Point</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/25/velodyne-VLP16在win和ubuntu_ROS下的配置/" data-id="cjcuacati0001qkvyl384frdq" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/25/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/25/velodyne-VLP16在win和ubuntu_ROS下的配置/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/25/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Shenzhou Chen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
