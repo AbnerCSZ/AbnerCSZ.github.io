@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="RANSAC随机抽样一致算法（RANdom SAmple Consensus,RANSAC）参考自wiki：RANSAC WIKI它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。 NOTE : 分成离群（outliers）、内群（inliers）和普通的拟合（比如">
+<meta name="description" content="RANSAC随机抽样一致算法（RANdom SAmple Consensus,RANSAC）参考自wiki：RANSAC WIKI它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。">
 <meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RANSAC-ICP-g2o-图优化">
 <meta property="og:url" content="http://yoursite.com/2018/01/26/RANSAC-ICP-g2o-图优化/index.html">
 <meta property="og:site_name" content="Shenzhou Chen">
-<meta property="og:description" content="RANSAC随机抽样一致算法（RANdom SAmple Consensus,RANSAC）参考自wiki：RANSAC WIKI它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。 NOTE : 分成离群（outliers）、内群（inliers）和普通的拟合（比如">
+<meta property="og:description" content="RANSAC随机抽样一致算法（RANdom SAmple Consensus,RANSAC）参考自wiki：RANSAC WIKI它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/c06fd8cf49f60f94a1e8579c1a6e8e8405e550bf">
 <meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/d9362e4064b2a93abe120816fce8e9240275e219">
 <meta property="og:image" content="http://img.blog.csdn.net/20170111015331119?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTM1NjMzNzA5Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-01-26T08:00:55.106Z">
+<meta property="og:updated_time" content="2018-01-26T08:32:55.036Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RANSAC-ICP-g2o-图优化">
-<meta name="twitter:description" content="RANSAC随机抽样一致算法（RANdom SAmple Consensus,RANSAC）参考自wiki：RANSAC WIKI它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。 NOTE : 分成离群（outliers）、内群（inliers）和普通的拟合（比如">
+<meta name="twitter:description" content="RANSAC随机抽样一致算法（RANdom SAmple Consensus,RANSAC）参考自wiki：RANSAC WIKI它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。">
 <meta name="twitter:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/c06fd8cf49f60f94a1e8579c1a6e8e8405e550bf">
 
 
@@ -314,7 +314,7 @@
       
 
       
-        <h2 id="RANSAC"><a href="#RANSAC" class="headerlink" title="RANSAC"></a>RANSAC</h2><p>随机抽样一致算法（RANdom SAmple Consensus,RANSAC）<br>参考自wiki：<br><a href="https://en.wikipedia.org/wiki/Random_sample_consensus" target="_blank" rel="noopener">RANSAC WIKI</a><br>它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。</p>
+        <h2 id="RANSAC"><a href="#RANSAC" class="headerlink" title="RANSAC"></a>RANSAC</h2><p>随机抽样一致算法（RANdom SAmple Consensus,RANSAC）<br>参考自wiki：<br><a href="https://en.wikipedia.org/wiki/Random_sample_consensus" target="_blank" rel="noopener">RANSAC WIKI</a><br>它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。<br><a id="more"></a></p>
 <p>NOTE : 分成离群（outliers）、内群（inliers）<br>和普通的拟合（比如simple least squares method）不同的是，普通拟合把所有数据都用上，但是RANSAC会分离出离群，只用内群算模型，就增加了准确性，但是对参数敏感，需要选择一个好的参数</p>
 <p>流程：</p>
 <blockquote>
