@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="algorithm," />
 
 
 
@@ -79,13 +79,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Shenzhou Chen">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="RANSAC随机抽样一致算法（RANdom SAmple Consensus,RANSAC）参考自wiki：RANSAC WIKI它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。 NOTE : 分成离群（outliers）、内群（inliers）和普通的拟合（比如">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RANSAC-ICP-g2o-图优化">
+<meta property="og:url" content="http://yoursite.com/2018/01/26/RANSAC-ICP-g2o-图优化/index.html">
 <meta property="og:site_name" content="Shenzhou Chen">
+<meta property="og:description" content="RANSAC随机抽样一致算法（RANdom SAmple Consensus,RANSAC）参考自wiki：RANSAC WIKI它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。 NOTE : 分成离群（outliers）、内群（inliers）和普通的拟合（比如">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/c06fd8cf49f60f94a1e8579c1a6e8e8405e550bf">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/d9362e4064b2a93abe120816fce8e9240275e219">
+<meta property="og:image" content="http://img.blog.csdn.net/20170111015331119?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTM1NjMzNzA5Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-01-26T08:00:55.106Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shenzhou Chen">
+<meta name="twitter:title" content="RANSAC-ICP-g2o-图优化">
+<meta name="twitter:description" content="RANSAC随机抽样一致算法（RANdom SAmple Consensus,RANSAC）参考自wiki：RANSAC WIKI它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。 NOTE : 分成离群（outliers）、内群（inliers）和普通的拟合（比如">
+<meta name="twitter:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/c06fd8cf49f60f94a1e8579c1a6e8e8405e550bf">
 
 
 
@@ -115,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/01/26/RANSAC-ICP-g2o-图优化/"/>
 
 
 
 
 
-  <title>Shenzhou Chen</title>
+  <title>RANSAC-ICP-g2o-图优化 | Shenzhou Chen</title>
   
 
 
@@ -140,8 +149,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -224,9 +232,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -256,9 +264,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/26/RANSAC-ICP-g2o-图优化/" itemprop="url">RANSAC-ICP-g2o-图优化</a></h1>
+          <h1 class="post-title" itemprop="name headline">RANSAC-ICP-g2o-图优化</h1>
         
 
         <div class="post-meta">
@@ -308,9 +314,7 @@
       
 
       
-        
-          
-            <h2 id="RANSAC"><a href="#RANSAC" class="headerlink" title="RANSAC"></a>RANSAC</h2><p>随机抽样一致算法（RANdom SAmple Consensus,RANSAC）<br>参考自wiki：<br><a href="https://en.wikipedia.org/wiki/Random_sample_consensus" target="_blank" rel="noopener">RANSAC WIKI</a><br>它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。</p>
+        <h2 id="RANSAC"><a href="#RANSAC" class="headerlink" title="RANSAC"></a>RANSAC</h2><p>随机抽样一致算法（RANdom SAmple Consensus,RANSAC）<br>参考自wiki：<br><a href="https://en.wikipedia.org/wiki/Random_sample_consensus" target="_blank" rel="noopener">RANSAC WIKI</a><br>它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。</p>
 <p>NOTE : 分成离群（outliers）、内群（inliers）<br>和普通的拟合（比如simple least squares method）不同的是，普通拟合把所有数据都用上，但是RANSAC会分离出离群，只用内群算模型，就增加了准确性，但是对参数敏感，需要选择一个好的参数</p>
 <p>流程：</p>
 <blockquote>
@@ -337,8 +341,6 @@
 <p>流程：<br>选择你想要的图里的节点与边的类型，确定它们的参数化形式；<br>往图里加入实际的节点和边；<br>选择初值，开始迭代；<br>每一步迭代中，计算对应于当前估计值的雅可比矩阵和海塞矩阵；<br>求解稀疏线性方程HkΔx=−bk，得到梯度方向；<br>继续用GN或LM进行迭代。如果迭代结束，返回优化值。</p>
 <h2 id="g2o"><a href="#g2o" class="headerlink" title="g2o"></a>g2o</h2><p>General Graph Optimization（g2o）<br><img src="http://img.blog.csdn.net/20170111015331119?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTM1NjMzNzA5Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="g2o"><br>选择优化方法流程：<br>1.选择一个线性方程求解器，从 PCG, CSparse, Choldmod中选，实际则来自 g2o/solvers 文件夹中定义的。<br>2.选择一个 BlockSolver 。<br>3.选择一个迭代策略，从GN, LM, Doglog中选。</p>
 
-          
-        
       
     </div>
     
@@ -353,280 +355,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/26/velodyne/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Shenzhou Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/me.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shenzhou Chen">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/26/velodyne/" itemprop="url">velodyne</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-26T15:53:56+08:00">
-                2018-01-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="其他配套配置："><a href="#其他配套配置：" class="headerlink" title="其他配套配置："></a>其他配套配置：</h1><p>抓包pcap–用于将pcap的原始文件转化成ROS结构，要在velodyne驱动前安装。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libpcap-dev</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h1 id="velodyne驱动配置："><a href="#velodyne驱动配置：" class="headerlink" title="velodyne驱动配置："></a>velodyne驱动配置：</h1><p>Windows</p>
-<p>以太网IPv4属性<br>设置IP：192.168.1.77<br>子网掩码：255.255.255.0<br>默认网关：192.168.1.1</p>
-<p>然后浏览器登陆192.168.1.201进入LIDAR界面</p>
-<p>打开U盘中的VeloView.exe ，Open Sensor Stream选择VLP16即可显示点云</p>
-<hr>
-<p>Linux</p>
-<p>以太网设置和Windows一样<br>保证浏览器登陆192.168.1.201可以进入LIDAR界面<br>下载ros下的velodyne驱动<a href="https://github.com/ros-drivers/velodyne" target="_blank" rel="noopener">ros-drivers/velodyne</a>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd catkin_ws/src</span><br><span class="line">git clone git@github.com:ros-drivers/velodyne.git</span><br><span class="line">cd ..</span><br><span class="line">catkin_make</span><br><span class="line">source devel/setup.bash</span><br></pre></td></tr></table></figure>
-<p>把Velodyne的xml文件（wiki中的VLP-16.xml）转化成yaml文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun velodyne_pointcloud gen_calibration.py /dir/VLP-16.xml</span><br></pre></td></tr></table></figure>
-<p>然后运行launch并显示点云：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">roslaunch velodyne_pointcloud VLP16_points.launch calibration:=/dir/VLP-16.yaml</span><br><span class="line">rosrun rviz rviz</span><br></pre></td></tr></table></figure>
-<p>结果：<br><img src="http://img.blog.csdn.net/20171219104638455?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTM1NjMzNzA5Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="velodyne_ros_test"></p>
-<hr>
-<h1 id="velodyne数据结构"><a href="#velodyne数据结构" class="headerlink" title="velodyne数据结构"></a>velodyne数据结构</h1><p>The VLP-16 outputs two types of UDP Ethernet packets: Data Packets and Position Packets.</p>
-<p> Data Packets</p>
-<p>12个100位的data+其他。data包括flag, azimuth, 32个（2位距离+1位reflectivity）–Data Point</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/25/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Shenzhou Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/me.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shenzhou Chen">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/25/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-25T16:58:54+08:00">
-                2018-01-25
-              </time>
+              <a href="/2018/01/26/velodyne/" rel="next" title="velodyne">
+                <i class="fa fa-chevron-left"></i> velodyne
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -636,10 +394,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -647,6 +406,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -667,8 +430,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -739,6 +511,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RANSAC"><span class="nav-number">1.</span> <span class="nav-text">RANSAC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ICP"><span class="nav-number">2.</span> <span class="nav-text">ICP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图优化理论"><span class="nav-number">3.</span> <span class="nav-text">图优化理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#g2o"><span class="nav-number">4.</span> <span class="nav-text">g2o</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -879,6 +667,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
