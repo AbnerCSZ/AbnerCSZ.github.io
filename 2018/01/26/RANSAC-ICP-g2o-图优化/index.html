@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="algorithm," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="RANSAC随机抽样一致算法（RANdom SAmple Consensus,RANSAC）参考自wiki：RANSAC WIKI它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RANSAC-ICP-g2o-图优化">
+<meta property="og:url" content="http://yoursite.com/2018/01/26/RANSAC-ICP-g2o-图优化/index.html">
+<meta property="og:site_name" content="Shenzhou Chen">
+<meta property="og:description" content="RANSAC随机抽样一致算法（RANdom SAmple Consensus,RANSAC）参考自wiki：RANSAC WIKI它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/c06fd8cf49f60f94a1e8579c1a6e8e8405e550bf">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/d9362e4064b2a93abe120816fce8e9240275e219">
+<meta property="og:image" content="http://img.blog.csdn.net/20170111015331119?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTM1NjMzNzA5Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-01-26T08:32:55.036Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RANSAC-ICP-g2o-图优化">
+<meta name="twitter:description" content="RANSAC随机抽样一致算法（RANdom SAmple Consensus,RANSAC）参考自wiki：RANSAC WIKI它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。">
+<meta name="twitter:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/c06fd8cf49f60f94a1e8579c1a6e8e8405e550bf">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/26/RANSAC-ICP-g2o-图优化/"/>
+
+
+
+
+
+  <title>RANSAC-ICP-g2o-图优化 | Shenzhou Chen</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shenzhou Chen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/26/RANSAC-ICP-g2o-图优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shenzhou Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shenzhou Chen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RANSAC-ICP-g2o-图优化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-26T16:00:13+08:00">
+                2018-01-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="RANSAC"><a href="#RANSAC" class="headerlink" title="RANSAC"></a>RANSAC</h2><p>随机抽样一致算法（RANdom SAmple Consensus,RANSAC）<br>参考自wiki：<br><a href="https://en.wikipedia.org/wiki/Random_sample_consensus" target="_blank" rel="noopener">RANSAC WIKI</a><br>它采用迭代的方式从一组包含离群的被观测数据中估算出数学模型的参数。 RANSAC是一个非确定性算法，在某种意义上说，它会产生一个在一定概率下合理的结果，而更多次的迭代会使这一概率增加。<br><a id="more"></a></p>
+<p>NOTE : 分成离群（outliers）、内群（inliers）<br>和普通的拟合（比如simple least squares method）不同的是，普通拟合把所有数据都用上，但是RANSAC会分离出离群，只用内群算模型，就增加了准确性，但是对参数敏感，需要选择一个好的参数</p>
+<p>流程：</p>
+<blockquote>
+<p>The set of inliers obtained for the fitting model is called consensus set. The RANSAC algorithm will iteratively repeat the above two steps until the obtained consensus set in certain iteration has enough inliers.<br>The input to the RANSAC algorithm is a set of observed data values, a way of fitting some kind of model to the observations, and some confidence parameters. RANSAC achieves its goal by repeating the following steps:<br>1.Select a random subset of the original data. Call this subset the hypothetical inliers.<br>2.A model is fitted to the set of hypothetical inliers.<br>3.All other data are then tested against the fitted model. Those points that fit the estimated model well, according to some model-specific loss function, are considered as part of the consensus set.<br>4.The estimated model is reasonably good if sufficiently many points have been classified as part of the consensus set.<br>5.Afterwards, the model may be improved by reestimating it using all members of the consensus set.</p>
+</blockquote>
+<p>1.从原始数据中选择一个子集S作为假定内群<br>2.用这个内群生成模型<br>3.其他数据（余集）对应这个模型测试，余集中与模型M的误差小于某一设定阈值t的样本集以及S构成S<em>。S</em>认为是内点集，它们构成S的一致集(Consensus Set)–在算法里就是判断 若小于阈值则加入一致集<br>4.若点数≥d，认为得到正确的模型参数，并利用集S<em>重新计算新的模型M</em>；重新随机抽取新的S，重复以上过程。</p>
+<p>算法：<br>Given:<br>    data – a set of observed data points<br>    model – a model that can be fitted to data points<br>    n – the minimum number of data values required to fit the model<br>    k – the maximum number of iterations allowed in the algorithm<br>    t – a threshold value for determining when a data point fits a model<br>    d – the number of close data values required to assert that a model fits well to data</p>
+<p>Return:<br>    bestfit – model parameters which best fit the data (or nul if no good model is found)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">iterations = 0</span><br><span class="line">bestfit = nul</span><br><span class="line">besterr = something really large</span><br><span class="line">while iterations &lt; k &#123;</span><br><span class="line">    maybeinliers = n randomly selected values from data</span><br><span class="line">    maybemodel = model parameters fitted to maybeinliers</span><br><span class="line">    alsoinliers = empty set</span><br><span class="line">    for every point in data not in maybeinliers &#123;</span><br><span class="line">        if point fits maybemodel with an error smaller than t</span><br><span class="line">             add point to alsoinliers</span><br><span class="line">    &#125;</span><br><span class="line">    if the number of elements in alsoinliers is &gt; d &#123;</span><br><span class="line">        % this implies that we may have found a good model</span><br><span class="line">        % now test how good it is</span><br><span class="line">        bettermodel = model parameters fitted to all points in maybeinliers and alsoinliers</span><br><span class="line">        thiserr = a measure of how well model fits these points</span><br><span class="line">        if thiserr &lt; besterr &#123;</span><br><span class="line">            bestfit = bettermodel</span><br><span class="line">            besterr = thiserr</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    increment iterations</span><br><span class="line">&#125;</span><br><span class="line">return bestfit</span><br></pre></td></tr></table></figure>
+<hr>
+<p>t和d(clarification needed)是要针对模型设置的，但是迭代次数k是可以理论得出的。<br>若设取n个点，k次迭代后成功概率是p<br>w = number of inliers in data / number of points in data<br>w只能有大概值，w^n是所选择的n个点都是内群的概率, 1-w^n 是所选择的n个点至少有一个不是内群的概率, (1 − w^n)^k 是表示重复k次都没有全部的n个点都是内群的概率-这是失败概率即1-p<br>所以：p = 1 −(1 − w^n)^k<br><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/c06fd8cf49f60f94a1e8579c1a6e8e8405e550bf" alt="k"><br>所以如果希望成功概率高，p = 0.99, 当n不变时，k越大,p越大, 当w不变时，n越大，所需的k就越大, 通常w未知，所以n选小一点比较好。<br><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d9362e4064b2a93abe120816fce8e9240275e219" alt="标准差"><br>要想效果更好可以引入标准差</p>
+<hr>
+<h2 id="ICP"><a href="#ICP" class="headerlink" title="ICP"></a>ICP</h2><p>参考自：<a href="https://en.wikipedia.org/wiki/Iterative_closest_point" target="_blank" rel="noopener">IPC-wiki</a><br>ICP（Iterative Closest Point） ：两点云之间最小差</p>
+<p>简介：一个参考点云（the reference, or target, is kept fixed），另一个点云（the source），通过迭代修正他们的transform（旋转和平移）直到误差最小</p>
+<p>输入：两个点云，两个点云连线的最初估计、迭代停止条件<br>输出：定义的transform</p>
+<p>过程：</p>
+<ol>
+<li>为参考点云里的每一个点找到目标点云里最近的点</li>
+<li>用均方误差得到两个点云连线的最初估计</li>
+<li>用这个估计应用在目标点云</li>
+<li>迭代</li>
+</ol>
+<h2 id="图优化理论"><a href="#图优化理论" class="headerlink" title="图优化理论"></a>图优化理论</h2><p>参考<a href="http://www.cnblogs.com/gaoxiang12/p/5244828.html" target="_blank" rel="noopener">图优化</a><br>图是由顶点（Vertex）和边（Edge）组成的结构，而图论则是研究图的理论。我们记一个图为G={V,E}G={V,E}，其中V为顶点集，E为边集。顶点可以表示一个状态变量，边表示连接状态变量之间的测量值。如果一条连接超过两点就是超图。<br>多数时候我们使用迭代方式求解。从一个初值x0x0出发，不断地导致当前值附近的，能使目标函数下降的方式（反向梯度），然后沿着梯度方向走出一步，从而使得函数值下降一点。这样反复迭代，理论上对于任何函数，都能找到一个极小值点。</p>
+<p>流程：<br>选择你想要的图里的节点与边的类型，确定它们的参数化形式；<br>往图里加入实际的节点和边；<br>选择初值，开始迭代；<br>每一步迭代中，计算对应于当前估计值的雅可比矩阵和海塞矩阵；<br>求解稀疏线性方程HkΔx=−bk，得到梯度方向；<br>继续用GN或LM进行迭代。如果迭代结束，返回优化值。</p>
+<h2 id="g2o"><a href="#g2o" class="headerlink" title="g2o"></a>g2o</h2><p>General Graph Optimization（g2o）<br><img src="http://img.blog.csdn.net/20170111015331119?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTM1NjMzNzA5Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="g2o"><br>选择优化方法流程：<br>1.选择一个线性方程求解器，从 PCG, CSparse, Choldmod中选，实际则来自 g2o/solvers 文件夹中定义的。<br>2.选择一个 BlockSolver 。<br>3.选择一个迭代策略，从GN, LM, Doglog中选。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/26/velodyne/" rel="next" title="velodyne">
+                <i class="fa fa-chevron-left"></i> velodyne
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/me.png"
+                alt="Shenzhou Chen" />
+            
+              <p class="site-author-name" itemprop="name">Shenzhou Chen</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AbnerCSZ" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chenshenzhou@zju.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/a356337092" title="Title" target="_blank">Title</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RANSAC"><span class="nav-number">1.</span> <span class="nav-text">RANSAC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ICP"><span class="nav-number">2.</span> <span class="nav-text">ICP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图优化理论"><span class="nav-number">3.</span> <span class="nav-text">图优化理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#g2o"><span class="nav-number">4.</span> <span class="nav-text">g2o</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shenzhou Chen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
