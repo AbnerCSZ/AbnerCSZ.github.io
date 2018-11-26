@@ -252,6 +252,261 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/26/SLAM或VO中两帧间匹配的方法汇总/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shenzhou Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈申周">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/26/SLAM或VO中两帧间匹配的方法汇总/" itemprop="url">SLAM或VO中两帧间匹配的方法汇总</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-26T14:33:13+08:00">
+                2018-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="2D-2D：对极几何"><a href="#2D-2D：对极几何" class="headerlink" title="2D-2D：对极几何"></a>2D-2D：对极几何</h1><h5 id="A-对极约束"><a href="#A-对极约束" class="headerlink" title="A.对极约束"></a>A.对极约束</h5><p>@输入：参考帧和当前帧的2D点坐标对（一般8对），内参<br>@输出：运动恢复R t</p>
+<p><img src="https://img-blog.csdnimg.cn/20181025195133363.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2EzNTYzMzcwOTI=,size_27,color_FFFFFF,t_70" alt="对极几何约束"><br>参考帧和当前帧的二维像素点通过特征点法拿到了匹配关系，那么从各自光心出发的两条射线交点即3D点，P和两个光心构成了极平面，$e1$ \ $e2$为极点，$l1$ \ $l2$是极线（Epipolar line）。<br>对极几何必须要有正确的匹配关系，否则当前帧无法找到参考帧$p1$对应的点在$p2$，那样的话就要用极线搜索了。<br>对极几何求R t的步骤是：<br>1.根据匹配的像素点对和内参求出基础矩阵F或者本质矩阵E。E=t^ R，只和运动有关，所以是我们求的本质，平移和旋转各3自由度，单目尺度歧义性自由度-1，所以E有5个自由度，一般用八点法，8对点求；F还包括内参$$F=K^{-T}<em>E</em>K^{-1}$$.<br>2.根据E或者R恢复R t。这里一般用SVD分解恢复出4个解，然后取点在相机前方的那个解。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/11/26/SLAM或VO中两帧间匹配的方法汇总/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/26/g2o EdgeSE3Expmap pose graph代码分析和雅克比推导/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shenzhou Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈申周">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/26/g2o EdgeSE3Expmap pose graph代码分析和雅克比推导/" itemprop="url">代码分析和雅克比推导.md</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-26T14:30:43+08:00">
+                2018-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>主要代码：<br>g2o/types/sba/types_six_dof_expmap.h<br>g2o/types/sba/types_six_dof_expmap.cpp</p>
+<h4 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h4><p><code>SE3Quat</code>包括四元数和vector3</p>
+<h4 id="相机位姿顶点"><a href="#相机位姿顶点" class="headerlink" title="相机位姿顶点"></a>相机位姿顶点</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VertexSE3Expmap::VertexSE3Expmap() : BaseVertex&lt;<span class="number">6</span>, SE3Quat&gt;() &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="路标3D点顶点"><a href="#路标3D点顶点" class="headerlink" title="路标3D点顶点"></a>路标3D点顶点</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VertexSBAPointXYZ::VertexSBAPointXYZ() : BaseVertex&lt;<span class="number">3</span>, Vector3&gt;()&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="位姿–位姿-边"><a href="#位姿–位姿-边" class="headerlink" title="位姿–位姿 边"></a>位姿–位姿 边</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EdgeSE3Expmap::EdgeSE3Expmap() :</span><br><span class="line">  BaseBinaryEdge&lt;<span class="number">6</span>, SE3Quat, VertexSE3Expmap, VertexSE3Expmap&gt;() &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>线性化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">void EdgeSE3Expmap::linearizeOplus() &#123;</span><br><span class="line">  VertexSE3Expmap * vi = static_cast&lt;VertexSE3Expmap *&gt;(_vertices[0]);</span><br><span class="line">  SE3Quat Ti(vi-&gt;estimate());</span><br><span class="line"></span><br><span class="line">  VertexSE3Expmap * vj = static_cast&lt;VertexSE3Expmap *&gt;(_vertices[1]);</span><br><span class="line">  SE3Quat Tj(vj-&gt;estimate());</span><br><span class="line"></span><br><span class="line">  const SE3Quat &amp; Tij = _measurement;</span><br><span class="line">  SE3Quat invTij = Tij.inverse();</span><br><span class="line"></span><br><span class="line">  SE3Quat invTj_Tij = Tj.inverse()*Tij;</span><br><span class="line">  SE3Quat infTi_invTij = Ti.inverse()*invTij;</span><br><span class="line"></span><br><span class="line">  _jacobianOplusXi = invTj_Tij.adj();</span><br><span class="line">  _jacobianOplusXj = -infTi_invTij.adj();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>误差模型：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">computeError</span><span class="params">()</span>  </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> VertexSE3Expmap* v1 = <span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> VertexSE3Expmap*&gt;(_vertices[<span class="number">0</span>]);</span><br><span class="line">  <span class="keyword">const</span> VertexSE3Expmap* v2 = <span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> VertexSE3Expmap*&gt;(_vertices[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">  <span class="function">SE3Quat <span class="title">C</span><span class="params">(_measurement)</span></span>;</span><br><span class="line">  SE3Quat error_= v2-&gt;estimate().inverse()*C*v1-&gt;estimate();</span><br><span class="line">  _error = error_.<span class="built_in">log</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/11/26/g2o EdgeSE3Expmap pose graph代码分析和雅克比推导/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/20/ORB-SLAM中Optimizer的优化分析及g2o点和边在ORB中的使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -322,8 +577,7 @@
 
       
         
-          
-            <ul>
+          <ul>
 <li><a href="#Optimizer::PoseOptimization">1.Optimizer::PoseOptimization </a><ul>
 <li><a href="#EdgeSE3ProjectXYZOnlyPose">EdgeSE3ProjectXYZOnlyPose</a></li>
 </ul>
@@ -350,32 +604,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">e = (u,v) - project(Tcw * Pw)  </span><br><span class="line"></span><br><span class="line">Tcw = CameraPose</span><br></pre></td></tr></table></figure>
 <p>二元边BaseBinaryEdge有<code>_jacobianOplusXi</code>和<code>_jacobianOplusXj</code>，这个比较好理解）<br>观测二维，所以残差也是二维，即当前帧的像素观测和地图点在当前帧的投影位置的残差，从而优化位姿。残差对位姿的求导所以雅克比维度是2X6。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">void EdgeSE3ProjectXYZOnlyPose::linearizeOplus() &#123;</span><br><span class="line">  VertexSE3Expmap * vi = static_cast&lt;VertexSE3Expmap *&gt;(_vertices[0]);</span><br><span class="line">  Vector3d xyz_trans = vi-&gt;estimate().map(Xw);</span><br><span class="line"></span><br><span class="line">  double x = xyz_trans[0];</span><br><span class="line">  double y = xyz_trans[1];</span><br><span class="line">  double invz = 1.0/xyz_trans[2];</span><br><span class="line">  double invz_2 = invz*invz;</span><br><span class="line"></span><br><span class="line">  _jacobianOplusXi(0,0) =  x*y*invz_2 *fx;</span><br><span class="line">  _jacobianOplusXi(0,1) = -(1+(x*x*invz_2)) *fx;</span><br><span class="line">  _jacobianOplusXi(0,2) = y*invz *fx;</span><br><span class="line">  _jacobianOplusXi(0,3) = -invz *fx;</span><br><span class="line">  _jacobianOplusXi(0,4) = 0;</span><br><span class="line">  _jacobianOplusXi(0,5) = x*invz_2 *fx;</span><br><span class="line"></span><br><span class="line">  _jacobianOplusXi(1,0) = (1+y*y*invz_2) *fy;</span><br><span class="line">  _jacobianOplusXi(1,1) = -x*y*invz_2 *fy;</span><br><span class="line">  _jacobianOplusXi(1,2) = -x*invz *fy;</span><br><span class="line">  _jacobianOplusXi(1,3) = 0;</span><br><span class="line">  _jacobianOplusXi(1,4) = -invz *fy;</span><br><span class="line">  _jacobianOplusXi(1,5) = y*invz_2 *fy;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>加完边后进行4次迭代，每次迭代优化10次，每次迭代完会有一次野值的筛选（根据卡方分布），TODO：野值边setLevel(1)，内点setLevle(0),why，好像1代表不优化。   </p>
-<hr>
-<h2 id="Optimizer-BundleAdjustment"><a href="#Optimizer-BundleAdjustment" class="headerlink" title="Optimizer::BundleAdjustment"></a>Optimizer::BundleAdjustment</h2><p>3D-2D BA，在GlobalBundleAdjustemnt中调用，计算量比较大  </p>
-<h4 id="EdgeSE3ProjectXYZ"><a href="#EdgeSE3ProjectXYZ" class="headerlink" title="EdgeSE3ProjectXYZ"></a>EdgeSE3ProjectXYZ</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EdgeSE3ProjectXYZ::EdgeSE3ProjectXYZ() : BaseBinaryEdge&lt;2, Vector2d, VertexSBAPointXYZ, VertexSE3Expmap&gt;() &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这条边连着3D地图点和位姿，测量和误差函数和EdgeSE3ProjectXYZOnlyPose一样，分别是像素点和<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">e = (u,v) - project(Tcw * Pw)  </span><br><span class="line"></span><br><span class="line">Tcw = CameraPose</span><br></pre></td></tr></table></figure></p>
-<p>但是上面是一元边，而这是二元边，即同时优化pose和地图点。所以线性化中要写两个雅可比,分别是二维的残差对3D地图点求导2X3,和对xi求导，2X6：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">void EdgeSE3ProjectXYZ::linearizeOplus() &#123;</span><br><span class="line">  ……</span><br><span class="line"></span><br><span class="line">  // 2*3</span><br><span class="line">  _jacobianOplusXi =  -1./z * tmp * T.rotation().toRotationMatrix();</span><br><span class="line"></span><br><span class="line">  // 2*6 the same as EdgeSE3ProjectXYZOnlyPose::linearizeOplus()</span><br><span class="line">  _jacobianOplusXj(0,0) =  x*y/z_2 *fx;</span><br><span class="line">  _jacobianOplusXj(0,1) = -(1+(x*x/z_2)) *fx;</span><br><span class="line">  _jacobianOplusXj(0,2) = y/z *fx;</span><br><span class="line">  _jacobianOplusXj(0,3) = -1./z *fx;</span><br><span class="line">  _jacobianOplusXj(0,4) = 0;</span><br><span class="line">  _jacobianOplusXj(0,5) = x/z_2 *fx;</span><br><span class="line"></span><br><span class="line">  _jacobianOplusXj(1,0) = (1+y*y/z_2) *fy;</span><br><span class="line">  _jacobianOplusXj(1,1) = -x*y/z_2 *fy;</span><br><span class="line">  _jacobianOplusXj(1,2) = -x/z *fy;</span><br><span class="line">  _jacobianOplusXj(1,3) = 0;</span><br><span class="line">  _jacobianOplusXj(1,4) = -1./z *fy;</span><br><span class="line">  _jacobianOplusXj(1,5) = y/z_2 *fy;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然後迭代一次，优化10次。然后setpose和setWorldPos成优化后的结果  </p>
-<hr>
-<h2 id="Optimizer-LocalBundleAdjustment"><a href="#Optimizer-LocalBundleAdjustment" class="headerlink" title="Optimizer::LocalBundleAdjustment"></a>Optimizer::LocalBundleAdjustment</h2><p>得到当前帧连接的KF和这些KF中的地图点后（lLocalKeyFrames和lLocalMapPoints），和能观测到这些地图点但没有和当前帧相连的KF（lFixedCameras）。<br>在加Pose顶点时（其中lFixedCameras的<code>vSE3-&gt;setFixed(true)</code>，而lLocalKeyFrames只用第一帧fix就可以）。  </p>
-<p>边也是<code>EdgeSE3ProjectXYZ</code>。和BA一样，只不过这里的数据来源是Local的，比较快一些。</p>
-<p>开始优化，迭代一次优化5次。然后根据卡方分布筛选阈值（这个阈值见多视图几何），去除野值后再优化。然后去除误差比较大的KF和地图点的互相观测。最后更新优化后的位姿和地图点。    </p>
-<hr>
-<h2 id="Optimizer-OptimizeEssentialGraph"><a href="#Optimizer-OptimizeEssentialGraph" class="headerlink" title="Optimizer::OptimizeEssentialGraph"></a>Optimizer::OptimizeEssentialGraph</h2><p>闭环检测后的优化<br>首先拿到地图中所有KF和地图点，声明vScw和vCorrectedSwc，分别代表未sim3优化前的sim3位姿和优化后的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for(vKFs)</span><br><span class="line">&#123;</span><br><span class="line">    g2o::VertexSim3Expmap* VSim3 = new g2o::VertexSim3Expmap();</span><br><span class="line">    如果是sim3调整过的KF，VSim3-&gt;setEstimate(it-&gt;second);用调整过的位姿</span><br><span class="line">    否则用当前pose。VSim3-&gt;setEstimate(Siw);</span><br><span class="line">    如果是当前帧对应的闭环帧，fixed</span><br><span class="line">    optimizer.addVertex(VSim3);</span><br><span class="line">    </span><br><span class="line">    并给vScw赋值供后面使用</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Set Loop edges</span><br><span class="line">// Set normal edges</span><br><span class="line">这边加的各种边类型都是EdgeSim3，区别只是不同的来源</span><br></pre></td></tr></table></figure></p>
-<h4 id="EdgeSim3"><a href="#EdgeSim3" class="headerlink" title="EdgeSim3"></a>EdgeSim3</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class G2O_CORE_API EdgeSim3 : public BaseBinaryEdge&lt;7, Sim3, VertexSim3Expmap, VertexSim3Expmap&gt;</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">  EIGEN_MAKE_ALIGNED_OPERATOR_NEW</span><br><span class="line">  EdgeSim3();</span><br><span class="line">  virtual bool read(std::istream&amp; is);</span><br><span class="line">  virtual bool write(std::ostream&amp; os) const;</span><br><span class="line">  void computeError()</span><br><span class="line">  &#123;</span><br><span class="line">    const VertexSim3Expmap* v1 = static_cast&lt;const VertexSim3Expmap*&gt;(_vertices[0]);</span><br><span class="line">    const VertexSim3Expmap* v2 = static_cast&lt;const VertexSim3Expmap*&gt;(_vertices[1]);</span><br><span class="line"></span><br><span class="line">    Sim3 C(_measurement);</span><br><span class="line">    Sim3 error_=C*v1-&gt;estimate()*v2-&gt;estimate().inverse();</span><br><span class="line">    _error = error_.log();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  virtual double initialEstimatePossible(const OptimizableGraph::VertexSet&amp; , OptimizableGraph::Vertex* ) &#123; return 1.;&#125;</span><br><span class="line">  virtual void initialEstimate(const OptimizableGraph::VertexSet&amp; from, OptimizableGraph::Vertex* /*to*/)</span><br><span class="line">  &#123;</span><br><span class="line">    VertexSim3Expmap* v1 = static_cast&lt;VertexSim3Expmap*&gt;(_vertices[0]);</span><br><span class="line">    VertexSim3Expmap* v2 = static_cast&lt;VertexSim3Expmap*&gt;(_vertices[1]);</span><br><span class="line">    if (from.count(v1) &gt; 0)</span><br><span class="line">v2-&gt;setEstimate(measurement()*v1-&gt;estimate());</span><br><span class="line">    else</span><br><span class="line">v1-&gt;setEstimate(measurement().inverse()*v2-&gt;estimate());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>可以看到是连接两个Sim3节点的二元边，顶点0的位姿是Tiw,1的位姿是Tjw，那么边的测量是Tji，即from i to j。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e = log( Measurement * Tiw * Tjw^&#123;-1&#125;  )</span><br></pre></td></tr></table></figure></p>
-<p>没有重载::linearizeOplus()方法，似乎是用g2o的自动求导，即差分。会不会慢一些？<br>优化后，<br>1.SE3 Pose Recovering. Sim3:[sR t;0 1] -&gt; SE3:[R t/s;0 1]，重新setpose，即取R，t/S。<br>2.Correct points. Transform to “non-optimized” reference keyframe pose and transform back with optimized pose。把世界系下的地图点投到未校正的相机系下再用矫正后的pose投到世界系，得到心得世界系坐标。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Eigen::Matrix&lt;double,3,1&gt; eigCorrectedP3Dw = correctedSwr.map(Srw.map(eigP3Dw));</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h2 id="Optimizer-OptimizeSim3"><a href="#Optimizer-OptimizeSim3" class="headerlink" title="Optimizer::OptimizeSim3"></a>Optimizer::OptimizeSim3</h2><p>是在筛选闭环候选帧的时候用的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int Optimizer::OptimizeSim3(KeyFrame *pKF1, KeyFrame *pKF2, vector&lt;MapPoint *&gt; &amp;vpMatches1, g2o::Sim3 &amp;g2oS12, const float th2, const bool bFixScale)</span><br></pre></td></tr></table></figure></p>
-<p>输入时当前帧、闭环候选帧和候选帧对应的地图点、优化前的sim3（当前帧和闭环候选帧之间Scm，m-候选帧）。输出时优化后的sim3位姿。</p>
-<h4 id="EdgeSim3ProjectXYZ"><a href="#EdgeSim3ProjectXYZ" class="headerlink" title="EdgeSim3ProjectXYZ"></a>EdgeSim3ProjectXYZ</h4><p>和前面提到的EdgeSE3ProjectXYZ有些不同，从SE3变成了SIM3，7自由度。ORB也用了g2o自动求导，把线性化函数注释掉了。观测一样，是像素坐标。如果自己写的话，应该是一个2X3的对点的雅可比，一个2X7的对sim3的雅可比。  </p>
-<hr>
-<h2 id="ORBLoopClosing"><a href="#ORBLoopClosing" class="headerlink" title="ORBLoopClosing"></a>ORBLoopClosing</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">if(CheckNewKeyFrames())</span><br><span class="line">&#123;</span><br><span class="line">    // Detect loop candidates and check covisibility consistency</span><br><span class="line">    if(DetectLoop())</span><br><span class="line">    &#123;</span><br><span class="line">       // Compute similarity transformation [sR|t]</span><br><span class="line">       // In the stereo/RGBD case s=1</span><br><span class="line">       if(ComputeSim3())    //用到Optimizer::OptimizeSim3筛选候选帧</span><br><span class="line">       &#123;</span><br><span class="line">           // Perform loop fusion and pose graph optimization</span><br><span class="line">           CorrectLoop();   //如果找到了，用到Optimizer::OptimizeEssentialGraph 优化。</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="Sim3"><a href="#Sim3" class="headerlink" title="Sim3"></a>Sim3</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">T  =  \begin&#123;bmatrix&#125;</span><br><span class="line">   sR &amp; t  \\</span><br><span class="line">   0 &amp; 1  </span><br><span class="line">  \end&#123;bmatrix&#125;    </span><br><span class="line">  </span><br><span class="line">T^&#123;-1&#125; =  \begin&#123;bmatrix&#125;</span><br><span class="line">   R/s &amp; -R^&#123;T&#125;t/s \\</span><br><span class="line">   0 &amp; 1  </span><br><span class="line">  \end&#123;bmatrix&#125;</span><br></pre></td></tr></table></figure>
-<p>在ORB实现的sim3节点中，逆的表示为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">q&apos; = q*; t&apos;=q*(-t/s);s&apos;=1/s</span><br></pre></td></tr></table></figure></p>
-
-          
+<h2 id=""><a href="#" class="headerlink" title=""></a>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/11/20/ORB-SLAM中Optimizer的优化分析及g2o点和边在ORB中的使用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -962,7 +1198,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

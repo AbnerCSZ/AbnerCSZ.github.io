@@ -79,17 +79,22 @@
 
 
 
-<meta name="description" content="Environment: in Ubuntu16.04, with ROS(kinetic). GCC&amp;gt;=5(for Optris) and cmake &amp;gt;=3(for tiscamera).You can use this commands to check it:12cmake --versiongcc --version">
+<meta name="description" content="2D-2D：对极几何A.对极约束@输入：参考帧和当前帧的2D点坐标对（一般8对），内参@输出：运动恢复R t 参考帧和当前帧的二维像素点通过特征点法拿到了匹配关系，那么从各自光心出发的两条射线交点即3D点，P和两个光心构成了极平面，$e1$ \ $e2$为极点，$l1$ \ $l2$是极线（Epipolar line）。对极几何必须要有正确的匹配关系，否则当前帧无法找到参考帧$p1$对应的点在$p">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Optris_and_Imagingsource.md">
-<meta property="og:url" content="http://yoursite.com/2018/03/14/Optris-and-Imagingsource-md/index.html">
+<meta property="og:title" content="SLAM或VO中两帧间匹配的方法汇总">
+<meta property="og:url" content="http://yoursite.com/2018/11/26/SLAM或VO中两帧间匹配的方法汇总/index.html">
 <meta property="og:site_name" content="陈申周">
-<meta property="og:description" content="Environment: in Ubuntu16.04, with ROS(kinetic). GCC&amp;gt;=5(for Optris) and cmake &amp;gt;=3(for tiscamera).You can use this commands to check it:12cmake --versiongcc --version">
+<meta property="og:description" content="2D-2D：对极几何A.对极约束@输入：参考帧和当前帧的2D点坐标对（一般8对），内参@输出：运动恢复R t 参考帧和当前帧的二维像素点通过特征点法拿到了匹配关系，那么从各自光心出发的两条射线交点即3D点，P和两个光心构成了极平面，$e1$ \ $e2$为极点，$l1$ \ $l2$是极线（Epipolar line）。对极几何必须要有正确的匹配关系，否则当前帧无法找到参考帧$p1$对应的点在$p">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-14T02:40:30.363Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181025195133363.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2EzNTYzMzcwOTI=,size_27,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181025195238815.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2EzNTYzMzcwOTI=,size_27,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181025195315159.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2EzNTYzMzcwOTI=,size_27,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181025195347789.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2EzNTYzMzcwOTI=,size_27,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2018-11-26T06:36:20.127Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Optris_and_Imagingsource.md">
-<meta name="twitter:description" content="Environment: in Ubuntu16.04, with ROS(kinetic). GCC&amp;gt;=5(for Optris) and cmake &amp;gt;=3(for tiscamera).You can use this commands to check it:12cmake --versiongcc --version">
+<meta name="twitter:title" content="SLAM或VO中两帧间匹配的方法汇总">
+<meta name="twitter:description" content="2D-2D：对极几何A.对极约束@输入：参考帧和当前帧的2D点坐标对（一般8对），内参@输出：运动恢复R t 参考帧和当前帧的二维像素点通过特征点法拿到了匹配关系，那么从各自光心出发的两条射线交点即3D点，P和两个光心构成了极平面，$e1$ \ $e2$为极点，$l1$ \ $l2$是极线（Epipolar line）。对极几何必须要有正确的匹配关系，否则当前帧无法找到参考帧$p1$对应的点在$p">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20181025195133363.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2EzNTYzMzcwOTI=,size_27,color_FFFFFF,t_70">
 
 
 
@@ -119,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/14/Optris-and-Imagingsource-md/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/11/26/SLAM或VO中两帧间匹配的方法汇总/"/>
 
 
 
 
 
-  <title>Optris_and_Imagingsource.md | 陈申周</title>
+  <title>SLAM或VO中两帧间匹配的方法汇总 | 陈申周</title>
   
 
 
@@ -252,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/14/Optris-and-Imagingsource-md/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/26/SLAM或VO中两帧间匹配的方法汇总/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Shenzhou Chen">
@@ -269,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Optris_and_Imagingsource.md</h1>
+          <h1 class="post-title" itemprop="name headline">SLAM或VO中两帧间匹配的方法汇总</h1>
         
 
         <div class="post-meta">
@@ -281,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T10:32:43+08:00">
-                2018-03-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-26T14:33:13+08:00">
+                2018-11-26
               </time>
             
 
@@ -319,29 +324,14 @@
       
 
       
-        <p>Environment: in Ubuntu16.04, with ROS(kinetic). GCC&gt;=5(for Optris) and cmake &gt;=3(for tiscamera).<br>You can use this commands to check it:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmake --version</span><br><span class="line">gcc --version</span><br></pre></td></tr></table></figure></p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><h4 id="RGB-tiscamera"><a href="#RGB-tiscamera" class="headerlink" title="RGB-tiscamera"></a>RGB-tiscamera</h4><h6 id="installation"><a href="#installation" class="headerlink" title="installation"></a>installation</h6><p>Follow the tutorial on this <a href="https://github.com/TheImagingSource/tiscamera" target="_blank" rel="noopener">Github page of tiscamera</a> to build core modules.<br>And use this command to test whether the installation was successful:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gst-launch-1.0 tcambin ! videoconvert ! autovideosink</span><br></pre></td></tr></table></figure></p>
-<p>Then goto <a href="https://github.com/TheImagingSource/tiscamera/wiki/Getting-Started-with-USB-2.0-CMOS-Cameras" target="_blank" rel="noopener">wiki of tiscamera</a>. Follow the tutorial to get serial number and update the firmware.<br>Finally follow the tutorial on <a href="https://github.com/TheImagingSource/tiscamera/tree/master/examples/ROS" target="_blank" rel="noopener">example of ROS</a>.<br><strong>Remember to change the serial number and resolution in ‘tis_rosstarter’</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cam = tiscamera.Camera(&quot;17719924&quot;, 1920, 1080, 30, True, False)</span><br></pre></td></tr></table></figure></p>
-<p>Tips: Our serial number of tiscamera is 30714360.<br>This error may occur:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Fatal] no element &quot;shmsrc&quot;</span><br></pre></td></tr></table></figure></p>
-<p>You can solve this problem by this commands: ?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gstreamer0.10-plugins-good v4l-utils</span><br></pre></td></tr></table></figure></p>
-<h6 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h6><p>After roscore and adjust /tiscamera/example/ROS/tis_rosstarter, run:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./tis_rosstarter</span><br></pre></td></tr></table></figure></p>
-<p>Then you can change the trigger mode or exposure time and so on. X should be changed according to your machine.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">v4l2-ctl -d /dev/videoX --all		//all parameters</span><br><span class="line">v4l2-ctl -d /dev/videoX -l       //list parameters can be changed</span><br><span class="line">v4l2-ctl -d /dev/videoX -c exposure_absolute=100  	//change the exporsure time</span><br><span class="line">v4l2-ctl -d /dev/videoX -c privacy=1                    //0-unable trigger 1-enable</span><br></pre></td></tr></table></figure></p>
-<p>Now you finally can get the rostopic:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/camera/image_raw</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h4 id="Optris"><a href="#Optris" class="headerlink" title="Optris"></a>Optris</h4><h6 id="installation-1"><a href="#installation-1" class="headerlink" title="installation"></a>installation</h6><p>Firstly you should download the libirimage<strong>.deb from <a href="http://www.evocortex.org/downloads-1/" target="_blank" rel="noopener">evocortex</a>.<br>Then goto <a href="http://documentation.evocortex.com/libirimager2/html/index.html#sec_start" target="_blank" rel="noopener">Getting started</a> to install and learn knowledge about SDK. Or just jump to <a href="http://documentation.evocortex.com/libirimager2/html/Installation.html" target="_blank" rel="noopener">installtion</a>.<br>Follow the tutorials to get the serial number and <code>ir_find_serial</code>.xml.<br>Now git clone the ros drivers from <a href="https://github.com/evocortex/optris_drivers" target="_blank" rel="noopener">optris_drivers</a>. </strong>Remember to change “serial_nr” default=””, and replace config/number.xml**<br>Tips: Our serial number is 17071004.  </p>
-<h6 id="Usage-1"><a href="#Usage-1" class="headerlink" title="Usage"></a>Usage</h6><p>Now you can run<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">catkin_make</span><br><span class="line">roslaunch optris_drivers optris_drivers.launch</span><br></pre></td></tr></table></figure></p>
-<p>Now you finally can get the rostopic:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/optris/thermal_image</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h4 id="IMU"><a href="#IMU" class="headerlink" title="IMU"></a>IMU</h4><h6 id="installation-2"><a href="#installation-2" class="headerlink" title="installation"></a>installation</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:ethz-asl/ethzasl_xsens_driver.git </span><br><span class="line">cd ../</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
-<h6 id="Usage-2"><a href="#Usage-2" class="headerlink" title="Usage"></a>Usage</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod 777 /dev/ttyUSB0</span><br><span class="line">roslaunch xsens_driver xsens_driver.launch</span><br></pre></td></tr></table></figure>
-<hr>
-<h4 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h4><p>optitrack:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch mocap_optitrack mocap.launch</span><br></pre></td></tr></table></figure>
-<p>rosbag:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//all we need </span><br><span class="line">rosbag record /camera/image_raw /optris/thermal_image  /imu/data /Robot_1/ground_pose /Robot_2/ground_pose /Robot_3/ground_pose /Robot_1/pose /Robot_2/pose /Robot_3/pose</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//test trigger</span><br><span class="line">rosbag record /camera/image_raw /optris/thermal_image /chatter</span><br></pre></td></tr></table></figure>
-<p>ardunio:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod 777 /dev/ttyACM0</span><br><span class="line">rosrun rosserial_python serial_node.py /dev/ttyACM0</span><br></pre></td></tr></table></figure>
+        <h1 id="2D-2D：对极几何"><a href="#2D-2D：对极几何" class="headerlink" title="2D-2D：对极几何"></a>2D-2D：对极几何</h1><h5 id="A-对极约束"><a href="#A-对极约束" class="headerlink" title="A.对极约束"></a>A.对极约束</h5><p>@输入：参考帧和当前帧的2D点坐标对（一般8对），内参<br>@输出：运动恢复R t</p>
+<p><img src="https://img-blog.csdnimg.cn/20181025195133363.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2EzNTYzMzcwOTI=,size_27,color_FFFFFF,t_70" alt="对极几何约束"><br>参考帧和当前帧的二维像素点通过特征点法拿到了匹配关系，那么从各自光心出发的两条射线交点即3D点，P和两个光心构成了极平面，$e1$ \ $e2$为极点，$l1$ \ $l2$是极线（Epipolar line）。<br>对极几何必须要有正确的匹配关系，否则当前帧无法找到参考帧$p1$对应的点在$p2$，那样的话就要用极线搜索了。<br>对极几何求R t的步骤是：<br>1.根据匹配的像素点对和内参求出基础矩阵F或者本质矩阵E。E=t^ R，只和运动有关，所以是我们求的本质，平移和旋转各3自由度，单目尺度歧义性自由度-1，所以E有5个自由度，一般用八点法，8对点求；F还包括内参$$F=K^{-T}<em>E</em>K^{-1}$$.<br>2.根据E或者R恢复R t。这里一般用SVD分解恢复出4个解，然后取点在相机前方的那个解。<br><a id="more"></a></p>
+<h5 id="B-单应矩阵"><a href="#B-单应矩阵" class="headerlink" title="B.单应矩阵"></a>B.单应矩阵</h5><p>@输入：参考帧和当前帧的2D点坐标对（一般4对），内参<br>@输出：运动恢复R t<br>Homography描述两个平面之间的映射关系，自由度为8。可以通过4对不共线的点得出。一般配合RANSAC。<br>退化（degenerate）:特征点共面or纯旋转，基础矩阵的自由度下降(比如平移那块没了)，就出现了退化。<br>ORB中H 和F都算，取好的。</p>
+<h1 id="没有特征匹配下的2D-2D：极线搜索"><a href="#没有特征匹配下的2D-2D：极线搜索" class="headerlink" title="没有特征匹配下的2D-2D：极线搜索"></a>没有特征匹配下的2D-2D：极线搜索</h1><p><img src="https://img-blog.csdnimg.cn/20181025195238815.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2EzNTYzMzcwOTI=,size_27,color_FFFFFF,t_70" alt="极限搜索"><br>深度滤波器：用多次三角测量让深度估计收敛<br>直接法时候没有特征点匹配，所以需要用极限搜索，如DSO中ImmaturePoint::traceOn()。DSO论文中没有过多提及，深度滤波器部分可以看SVO比较详细。<br>@输入：<em>Frame_ref, </em>Frame_curr, R, t, 参考帧点像素位置和深度估计区间, 内参<br>@输出：当前帧对应点像素位置，点的深度和不确定度。</p>
+<p>这时候的前提是已知Rt（可以是估计出来的，也可以是静止模型、匀速模型、随机模型之类的），思路是：<br>这时候只知道参考帧的点像素坐标和深度区间，也知道当前帧的极线，$p1$深度区间投过来后限定了极线的搜索范围，于是在范围内用块匹配之类的方法评估NCC(Normalized Cross Correlation)找到相似度最高的点，如果只把这个点当作最终结果是不行的，很容易陷入局部极值。所以需要用滤波的方法多次搜索直到收敛。所以过程是：<br>1.假设像素的深度满足高斯分布，通过极限搜索确定当前帧像素点对应位置<br>2.根据几何关系三角化计算深度和几何不确定性（DSO还加上了光度不确定性）<br>3.根据深度和不确定性融合进上一次的估计中，DSO中是GN迭代，直到深度收敛。 </p>
+<h1 id="三角测量Triangulation"><a href="#三角测量Triangulation" class="headerlink" title="三角测量Triangulation"></a>三角测量Triangulation</h1><p>@输入：参考帧和当前帧的2D点坐标对，恢复出的R t<br>@输出：空间点的位置（即参考帧和当前帧点对应的深度s1 s2）<br>在用2D-2D的方法恢复出Rt后，还需要用运动估计点的空间位置。<br><img src="https://img-blog.csdnimg.cn/20181025195315159.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2EzNTYzMzcwOTI=,size_27,color_FFFFFF,t_70" alt="三角化"><br>理论上两个射线会交于点P，但无论是匹配误差还是运动估计误差等噪声都会导致无法相交，所以一般用最小二乘的思路解点的位置。最后求得两帧系下的位置深度s1和s2。三角测量必须要有一定的平移。(CSDN里面 \^{}打不出反协号)<br>$$s_1<em>x_1 ^ \nu x_1=0=s_2 </em> x_1 ^\nu <em>R </em> s_2+x_1^\nu t$$</p>
+<h1 id="3D-2D-PnP"><a href="#3D-2D-PnP" class="headerlink" title="3D-2D:PnP"></a>3D-2D:PnP</h1><p>@输入：参考帧下的特征点像素坐标和3D坐标，匹配到当前帧的2D点像素坐标，内参<br>@输出：运动估计R t<br>Perspective-n-Point，当知道了n个空间点和其投影位置的情况下求解位姿。3D-2D比2D-2D简单的多，最少只需要3对点，不过他需要特征点的3D位置，可以由三角化or RGB-D or lidar提供，因此在双目和RGB-D中就很方便，单目中要先初始化后才能用PnP。需要注意的是：3D点的位置应该是在参考帧坐标系下的，实际上等价于在世界坐标系下已知（因为参考帧对世界系的T已知），而当前帧的空间坐标是不知道的，只知道参考帧特征点对应的2D像素坐标，否则就成了3D-3D ICP了。<br>PnP有很多方法，一般先用P3P/EPnP估计一个初值，然后用非线性优化的方法即BA refine：<br><img src="https://img-blog.csdnimg.cn/20181025195347789.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2EzNTYzMzcwOTI=,size_27,color_FFFFFF,t_70" alt="pnp"><br>当前已知p1 p2坐标和P在左图下的3D点，这时候BA优化重投影误差，不断更新R t，让P在右图的投影p2^尽量接近p2，即可用G-N L-M等优化方法求出R t。（这里可以看看其中的雅可比推导），BA的目标函数：<br>$$ \xi^* = \mathop{\arg\min}_{\xi} \ \  \frac{1}{2} \sum |  u_i - \frac{1}{s_i}Kexp(\xi^\nu)P_i |^2_2  $$<br>即重投影误差，u是当前帧像素坐标即p2,Pi是参考帧下的3D点齐次坐标，这里的1/s实际上就是在K投影前将当前系下估计出的3D坐标归一化，所以变量只有李代数。</p>
+<h1 id="3D-3D-ICP"><a href="#3D-3D-ICP" class="headerlink" title="3D-3D ICP"></a>3D-3D ICP</h1><p>@输入：配对好的一组3D点对，即那坨点云分别在参考帧下和当前帧下的坐标<br>@输出：运动恢复R t<br>这时候不用输入相机内参，3D-3D和相机模型无关，所以lidar也可以直接用，视觉和lidar的ICP区别是：视觉可以通过特征点去匹配2D点然后找到对应的3D点对，但是lidar有时比较难匹配特征点对，就认为距离最近的两个点是同一个点，即最近邻，当然这个点也是有一定的几何特征的特征点；当然lidar也可以用强度匹配之类的。<br>BA的目标函数：p p’为两对输入，变量为李代数<br>$$ \xi^* = \mathop{\arg\min}_{\xi} \ \  \frac{1}{2} \sum |  p_i -  exp(\xi^\nu)p_i ‘ |^2_2  $$</p>
 
       
     </div>
@@ -366,8 +356,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/26/RANSAC-ICP-g2o-图优化/" rel="next" title="RANSAC-ICP-g2o-图优化">
-                <i class="fa fa-chevron-left"></i> RANSAC-ICP-g2o-图优化
+              <a href="/2018/11/26/g2o EdgeSE3Expmap pose graph代码分析和雅克比推导/" rel="next" title="代码分析和雅克比推导.md">
+                <i class="fa fa-chevron-left"></i> 代码分析和雅克比推导.md
               </a>
             
           </div>
@@ -375,10 +365,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/20/ORB-SLAM中Optimizer的优化分析及g2o点和边在ORB中的使用/" rel="prev" title="ORB_SLAM中Optimizer的优化分析及g2o点和边在ORB中的使用">
-                ORB_SLAM中Optimizer的优化分析及g2o点和边在ORB中的使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -540,7 +526,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RGB-tiscamera"><span class="nav-number">1.0.1.</span> <span class="nav-text">RGB-tiscamera</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#installation"><span class="nav-number">1.0.1.0.1.</span> <span class="nav-text">installation</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Usage"><span class="nav-number">1.0.1.0.2.</span> <span class="nav-text">Usage</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Optris"><span class="nav-number">1.0.2.</span> <span class="nav-text">Optris</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#installation-1"><span class="nav-number">1.0.2.0.1.</span> <span class="nav-text">installation</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Usage-1"><span class="nav-number">1.0.2.0.2.</span> <span class="nav-text">Usage</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IMU"><span class="nav-number">1.0.3.</span> <span class="nav-text">IMU</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#installation-2"><span class="nav-number">1.0.3.0.1.</span> <span class="nav-text">installation</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Usage-2"><span class="nav-number">1.0.3.0.2.</span> <span class="nav-text">Usage</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Other"><span class="nav-number">1.0.4.</span> <span class="nav-text">Other</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2D-2D：对极几何"><span class="nav-number">1.</span> <span class="nav-text">2D-2D：对极几何</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#A-对极约束"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">A.对极约束</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#B-单应矩阵"><span class="nav-number">1.0.0.0.2.</span> <span class="nav-text">B.单应矩阵</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#没有特征匹配下的2D-2D：极线搜索"><span class="nav-number">2.</span> <span class="nav-text">没有特征匹配下的2D-2D：极线搜索</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三角测量Triangulation"><span class="nav-number">3.</span> <span class="nav-text">三角测量Triangulation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3D-2D-PnP"><span class="nav-number">4.</span> <span class="nav-text">3D-2D:PnP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3D-3D-ICP"><span class="nav-number">5.</span> <span class="nav-text">3D-3D ICP</span></a></li></ol></div>
             
 
           </div>
