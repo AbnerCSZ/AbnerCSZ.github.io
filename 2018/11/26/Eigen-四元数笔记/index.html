@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Lidar," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,20 +79,17 @@
 
 
 
-<meta name="description" content="其他配套配置：抓包pcap–用于将pcap的原始文件转化成ROS结构，要在velodyne驱动前安装。1sudo apt-get install libpcap-dev  velodyne驱动配置：">
-<meta name="keywords" content="Lidar">
+<meta name="description" content="参考资料学习四元数的小demo：Eigen_Quaternion_demo主要的参考文档，Eigen官网中四元数部分：QuaternionBase">
 <meta property="og:type" content="article">
-<meta property="og:title" content="velodyne">
-<meta property="og:url" content="http://yoursite.com/2018/01/26/velodyne/index.html">
+<meta property="og:title" content="Eigen_四元数笔记">
+<meta property="og:url" content="http://yoursite.com/2018/11/26/Eigen-四元数笔记/index.html">
 <meta property="og:site_name" content="陈申周">
-<meta property="og:description" content="其他配套配置：抓包pcap–用于将pcap的原始文件转化成ROS结构，要在velodyne驱动前安装。1sudo apt-get install libpcap-dev  velodyne驱动配置：">
+<meta property="og:description" content="参考资料学习四元数的小demo：Eigen_Quaternion_demo主要的参考文档，Eigen官网中四元数部分：QuaternionBase">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://img.blog.csdn.net/20171219104638455?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTM1NjMzNzA5Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-01-26T08:33:11.375Z">
+<meta property="og:updated_time" content="2018-11-26T06:53:09.025Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="velodyne">
-<meta name="twitter:description" content="其他配套配置：抓包pcap–用于将pcap的原始文件转化成ROS结构，要在velodyne驱动前安装。1sudo apt-get install libpcap-dev  velodyne驱动配置：">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20171219104638455?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTM1NjMzNzA5Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:title" content="Eigen_四元数笔记">
+<meta name="twitter:description" content="参考资料学习四元数的小demo：Eigen_Quaternion_demo主要的参考文档，Eigen官网中四元数部分：QuaternionBase">
 
 
 
@@ -122,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/26/velodyne/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/11/26/Eigen-四元数笔记/"/>
 
 
 
 
 
-  <title>velodyne | 陈申周</title>
+  <title>Eigen_四元数笔记 | 陈申周</title>
   
 
 
@@ -255,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/26/velodyne/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/26/Eigen-四元数笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Shenzhou Chen">
@@ -272,7 +269,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">velodyne</h1>
+          <h1 class="post-title" itemprop="name headline">Eigen_四元数笔记</h1>
         
 
         <div class="post-meta">
@@ -284,8 +281,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-26T15:53:56+08:00">
-                2018-01-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-26T14:51:56+08:00">
+                2018-11-26
               </time>
             
 
@@ -322,26 +319,45 @@
       
 
       
-        <h1 id="其他配套配置："><a href="#其他配套配置：" class="headerlink" title="其他配套配置："></a>其他配套配置：</h1><p>抓包pcap–用于将pcap的原始文件转化成ROS结构，要在velodyne驱动前安装。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libpcap-dev</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h1 id="velodyne驱动配置："><a href="#velodyne驱动配置：" class="headerlink" title="velodyne驱动配置："></a>velodyne驱动配置：</h1><a id="more"></a>
-<p>Windows</p>
-<p>以太网IPv4属性<br>设置IP：192.168.1.77<br>子网掩码：255.255.255.0<br>默认网关：192.168.1.1</p>
-<p>然后浏览器登陆192.168.1.201进入LIDAR界面</p>
-<p>打开U盘中的VeloView.exe ，Open Sensor Stream选择VLP16即可显示点云</p>
-<hr>
-<p>Linux</p>
-<p>以太网设置和Windows一样<br>保证浏览器登陆192.168.1.201可以进入LIDAR界面<br>下载ros下的velodyne驱动<a href="https://github.com/ros-drivers/velodyne" target="_blank" rel="noopener">ros-drivers/velodyne</a>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd catkin_ws/src</span><br><span class="line">git clone git@github.com:ros-drivers/velodyne.git</span><br><span class="line">cd ..</span><br><span class="line">catkin_make</span><br><span class="line">source devel/setup.bash</span><br></pre></td></tr></table></figure>
-<p>把Velodyne的xml文件（wiki中的VLP-16.xml）转化成yaml文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun velodyne_pointcloud gen_calibration.py /dir/VLP-16.xml</span><br></pre></td></tr></table></figure>
-<p>然后运行launch并显示点云：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">roslaunch velodyne_pointcloud VLP16_points.launch calibration:=/dir/VLP-16.yaml</span><br><span class="line">rosrun rviz rviz</span><br></pre></td></tr></table></figure>
-<p>结果：<br><img src="http://img.blog.csdn.net/20171219104638455?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTM1NjMzNzA5Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="velodyne_ros_test"></p>
-<hr>
-<h1 id="velodyne数据结构"><a href="#velodyne数据结构" class="headerlink" title="velodyne数据结构"></a>velodyne数据结构</h1><p>The VLP-16 outputs two types of UDP Ethernet packets: Data Packets and Position Packets.</p>
-<p> Data Packets</p>
-<p>12个100位的data+其他。data包括flag, azimuth, 32个（2位距离+1位reflectivity）–Data Point</p>
+        <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>学习四元数的小demo：<br><a href="https://github.com/AbnerCSZ/Eigen_Quaternion_demo" target="_blank" rel="noopener">Eigen_Quaternion_demo</a><br>主要的参考文档，Eigen官网中四元数部分：<br><a href="http://eigen.tuxfamily.org/dox/classEigen_1_1QuaternionBase.html" target="_blank" rel="noopener">QuaternionBase</a><br><a id="more"></a></p>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p>常用的四元数格式有Quaternionf(float)和Quaterniond(double)，模板类中的Scalar决定数据类型。<br>官方介绍有七种构造方式，不过常用的一般有以下几种：  </p>
+<ul>
+<li>直接赋值<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Eigen::Quaternion&lt; _Scalar, _Options &gt;::Quaternion( <span class="keyword">const</span> Scalar &amp; w,<span class="keyword">const</span> Scalar &amp; x,<span class="keyword">const</span> Scalar &amp;y,<span class="keyword">const</span> Scalar &amp; z ) 	</span><br><span class="line"><span class="comment">//for example</span></span><br><span class="line"><span class="function">Quaterniond <span class="title">q</span><span class="params">(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>要注意Eigen中四元数赋值的顺序，实数w在首；但是实际上它的内部存储顺序是[x y z w]。实际上后面输出系数的时候也是按内部存储顺序输出</p>
+<blockquote>
+<p>Note the order of the arguments: the real w coefficient first, while internally the coefficients are stored in the following order: [x, y, z, w]<br>3。  </p>
+</blockquote>
+<ul>
+<li><p>从旋转矩阵或向量构造</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Eigen::Quaternion&lt; _Scalar, _Options &gt;::Quaternion(<span class="keyword">const</span> MatrixBase&lt; Derived &gt; &amp; other)	</span><br><span class="line"><span class="comment">//for example</span></span><br><span class="line">Matrix3d mat;</span><br><span class="line"><span class="function">Quaterniond <span class="title">q</span><span class="params">(mat)</span></span>;</span><br><span class="line"><span class="function">VectorXd <span class="title">vq</span><span class="params">(<span class="number">4</span>)</span></span>;</span><br><span class="line">vq&lt;&lt;<span class="number">1.0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>;</span><br><span class="line"><span class="function">Quaterniond <span class="title">qv</span><span class="params">(vq)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从数组构造<br>数组的顺序应该是[w x y z]</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Eigen::Quaternion&lt; _Scalar, _Options &gt;::Quaternion	(	<span class="keyword">const</span> Scalar * 	data	)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h3><p>罗列一些比较常用的：  </p>
+<ul>
+<li><p>输出系数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">q.coeffs();     <span class="comment">//[x y z w]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>输出虚部  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">q.vec();    <span class="comment">//[x y z]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以上两种输出都是以Eigen中的向量Vector形式输出  </p>
+<ul>
+<li>输出旋转矩阵   </li>
+</ul>
+<p>要注意的是，只有单位四元数才表示旋转矩阵，所以要先对四元数做单位化<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">q.normalized();	<span class="comment">//important</span></span><br><span class="line">Matrix3d R=q.toRotationMatrix();</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>共轭/即反向旋转   </li>
+</ul>
+<p>一般不用inverse，在表示旋转的时候（范数是1），共轭即可表示相反的的旋转。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//q.inverse();</span></span><br><span class="line">q.conjugate();</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>遍历元素<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span>&lt;&lt;q.w()&lt;&lt;<span class="string">"  "</span>&lt;&lt;q.x()&lt;&lt;<span class="string">"  "</span>&lt;&lt;q.y()&lt;&lt;<span class="string">"  "</span>&lt;&lt;q.z()&lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
@@ -357,12 +373,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Lidar/" rel="tag"># Lidar</a>
-          
-        </div>
-      
 
       
       
@@ -372,8 +382,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/25/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2018/11/26/SLAM或VO中两帧间匹配的方法汇总/" rel="next" title="SLAM或VO中两帧间匹配的方法汇总">
+                <i class="fa fa-chevron-left"></i> SLAM或VO中两帧间匹配的方法汇总
               </a>
             
           </div>
@@ -381,10 +391,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/26/RANSAC-ICP-g2o-图优化/" rel="prev" title="RANSAC-ICP-g2o-图优化">
-                RANSAC-ICP-g2o-图优化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -546,7 +552,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#其他配套配置："><span class="nav-number">1.</span> <span class="nav-text">其他配套配置：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#velodyne驱动配置："><span class="nav-number">2.</span> <span class="nav-text">velodyne驱动配置：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#velodyne数据结构"><span class="nav-number">3.</span> <span class="nav-text">velodyne数据结构</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数"><span class="nav-number">2.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用函数"><span class="nav-number">3.</span> <span class="nav-text">常用函数</span></a></li></ol></div>
             
 
           </div>
