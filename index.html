@@ -377,7 +377,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/26/g2o EdgeSE3Expmap pose graph代码分析和雅克比推导/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/26/g2o_EdgeSE3Expmap_pose_graph代码分析和雅克比推导/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Shenzhou Chen">
@@ -396,7 +396,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/26/g2o EdgeSE3Expmap pose graph代码分析和雅克比推导/" itemprop="url">代码分析和雅克比推导.md</a></h1>
+                <a class="post-title-link" href="/2018/11/26/g2o_EdgeSE3Expmap_pose_graph代码分析和雅克比推导/" itemprop="url">g2o_EdgeSE3Expmap_pose_graph代码分析和雅克比推导.md</a></h1>
         
 
         <div class="post-meta">
@@ -456,7 +456,7 @@
 <p>误差模型：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">computeError</span><span class="params">()</span>  </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> VertexSE3Expmap* v1 = <span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> VertexSE3Expmap*&gt;(_vertices[<span class="number">0</span>]);</span><br><span class="line">  <span class="keyword">const</span> VertexSE3Expmap* v2 = <span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> VertexSE3Expmap*&gt;(_vertices[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">  <span class="function">SE3Quat <span class="title">C</span><span class="params">(_measurement)</span></span>;</span><br><span class="line">  SE3Quat error_= v2-&gt;estimate().inverse()*C*v1-&gt;estimate();</span><br><span class="line">  _error = error_.<span class="built_in">log</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/11/26/g2o EdgeSE3Expmap pose graph代码分析和雅克比推导/#more" rel="contents">
+            <a class="btn" href="/2018/11/26/g2o_EdgeSE3Expmap_pose_graph代码分析和雅克比推导/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>

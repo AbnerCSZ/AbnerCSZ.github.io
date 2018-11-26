@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="主要代码：g2o/types/sba/types_six_dof_expmap.hg2o/types/sba/types_six_dof_expmap.cpp 基本结构SE3Quat包括四元数和vector3 相机位姿顶点12VertexSE3Expmap::VertexSE3Expmap() : BaseVertex&amp;lt;6, SE3Quat&amp;gt;() &amp;#123;&amp;#125; 路标3D点顶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="g2o_EdgeSE3Expmap_pose_graph代码分析和雅克比推导.md">
+<meta property="og:url" content="http://yoursite.com/2018/11/26/g2o_EdgeSE3Expmap_pose_graph代码分析和雅克比推导/index.html">
+<meta property="og:site_name" content="陈申周">
+<meta property="og:description" content="主要代码：g2o/types/sba/types_six_dof_expmap.hg2o/types/sba/types_six_dof_expmap.cpp 基本结构SE3Quat包括四元数和vector3 相机位姿顶点12VertexSE3Expmap::VertexSE3Expmap() : BaseVertex&amp;lt;6, SE3Quat&amp;gt;() &amp;#123;&amp;#125; 路标3D点顶">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-26T06:40:12.107Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="g2o_EdgeSE3Expmap_pose_graph代码分析和雅克比推导.md">
+<meta name="twitter:description" content="主要代码：g2o/types/sba/types_six_dof_expmap.hg2o/types/sba/types_six_dof_expmap.cpp 基本结构SE3Quat包括四元数和vector3 相机位姿顶点12VertexSE3Expmap::VertexSE3Expmap() : BaseVertex&amp;lt;6, SE3Quat&amp;gt;() &amp;#123;&amp;#125; 路标3D点顶">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/26/g2o_EdgeSE3Expmap_pose_graph代码分析和雅克比推导/"/>
+
+
+
+
+
+  <title>g2o_EdgeSE3Expmap_pose_graph代码分析和雅克比推导.md | 陈申周</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">陈申周</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">勿道君行早 更有早行人</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hahhhhh/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/26/g2o_EdgeSE3Expmap_pose_graph代码分析和雅克比推导/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shenzhou Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈申周">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">g2o_EdgeSE3Expmap_pose_graph代码分析和雅克比推导.md</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-26T14:30:43+08:00">
+                2018-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>主要代码：<br>g2o/types/sba/types_six_dof_expmap.h<br>g2o/types/sba/types_six_dof_expmap.cpp</p>
+<h4 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h4><p><code>SE3Quat</code>包括四元数和vector3</p>
+<h4 id="相机位姿顶点"><a href="#相机位姿顶点" class="headerlink" title="相机位姿顶点"></a>相机位姿顶点</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VertexSE3Expmap::VertexSE3Expmap() : BaseVertex&lt;<span class="number">6</span>, SE3Quat&gt;() &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="路标3D点顶点"><a href="#路标3D点顶点" class="headerlink" title="路标3D点顶点"></a>路标3D点顶点</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VertexSBAPointXYZ::VertexSBAPointXYZ() : BaseVertex&lt;<span class="number">3</span>, Vector3&gt;()&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="位姿–位姿-边"><a href="#位姿–位姿-边" class="headerlink" title="位姿–位姿 边"></a>位姿–位姿 边</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EdgeSE3Expmap::EdgeSE3Expmap() :</span><br><span class="line">  BaseBinaryEdge&lt;<span class="number">6</span>, SE3Quat, VertexSE3Expmap, VertexSE3Expmap&gt;() &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>线性化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">void EdgeSE3Expmap::linearizeOplus() &#123;</span><br><span class="line">  VertexSE3Expmap * vi = static_cast&lt;VertexSE3Expmap *&gt;(_vertices[0]);</span><br><span class="line">  SE3Quat Ti(vi-&gt;estimate());</span><br><span class="line"></span><br><span class="line">  VertexSE3Expmap * vj = static_cast&lt;VertexSE3Expmap *&gt;(_vertices[1]);</span><br><span class="line">  SE3Quat Tj(vj-&gt;estimate());</span><br><span class="line"></span><br><span class="line">  const SE3Quat &amp; Tij = _measurement;</span><br><span class="line">  SE3Quat invTij = Tij.inverse();</span><br><span class="line"></span><br><span class="line">  SE3Quat invTj_Tij = Tj.inverse()*Tij;</span><br><span class="line">  SE3Quat infTi_invTij = Ti.inverse()*invTij;</span><br><span class="line"></span><br><span class="line">  _jacobianOplusXi = invTj_Tij.adj();</span><br><span class="line">  _jacobianOplusXj = -infTi_invTij.adj();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>误差模型：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">computeError</span><span class="params">()</span>  </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> VertexSE3Expmap* v1 = <span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> VertexSE3Expmap*&gt;(_vertices[<span class="number">0</span>]);</span><br><span class="line">  <span class="keyword">const</span> VertexSE3Expmap* v2 = <span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> VertexSE3Expmap*&gt;(_vertices[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">  <span class="function">SE3Quat <span class="title">C</span><span class="params">(_measurement)</span></span>;</span><br><span class="line">  SE3Quat error_= v2-&gt;estimate().inverse()*C*v1-&gt;estimate();</span><br><span class="line">  _error = error_.<span class="built_in">log</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h5 id="推导："><a href="#推导：" class="headerlink" title="推导："></a>推导：</h5><p>注：1.Twc camera to world，但是g2o里面setEstimate用的是Tcw，setMeasurement用的是Tji。ORB中的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g2o::VertexSE3Expmap * vSE3 = new g2o::VertexSE3Expmap();</span><br><span class="line">vSE3-&gt;setEstimate(Converter::toSE3Quat(pFrame-&gt;mTcw));</span><br></pre></td></tr></table></figure></p>
+<p>2.markdown 里\^ 打不出skew符号 用s代替，有时也可以直接用<code>$exp(\xi)$</code>代表指数映射。<br>3.lie伴随性质<code>$exp((Adj(T)\xi)^s ) = Texp(\xi^s)T^{-1} $</code>其中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Adj(T) =   \begin&#123;bmatrix&#125;</span><br><span class="line">   R &amp; t^SR \\</span><br><span class="line">   0 &amp; R  </span><br><span class="line">  \end&#123;bmatrix&#125;</span><br></pre></td></tr></table></figure></p>
+<p>变体:<br><code>$ exp( (\xi^s) )T = T exp(( Adj(T^{-1})\xi)^s ) $</code>这个公式在求导中很有用，可以用来替换左乘右乘的位置<br>在Lie Groups for 2D and 3D Transformations》中示例两个SE3乘积的求导：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C = C_1C_0  </span><br><span class="line"></span><br><span class="line">\frac&#123;\partial C&#125;&#123;\partial C_O&#125;=\frac&#123;\partial C&#125;&#123;\partial \delta&#125;[C_1 exp(\delta) C_0]  </span><br><span class="line">=\frac&#123;\partial C&#125;&#123;\partial \delta&#125;[exp(Adj(C_1) \delta) C_1 C_0]=Adj(C_1)</span><br></pre></td></tr></table></figure></p>
+<p>开始求雅克比：<br>在g2o的边EdgeSE3Expmap中，两个顶点如上所述setEstimate()分别是Tiw, Tjw，根据代码中的误差模型可以看到误差：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">T_&#123;err&#125; = T_&#123;jw&#125;^&#123;-1&#125; T_&#123;ji&#125; T_&#123;iw&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>$T_{ji}$</code>是测量值，通过setMeasurement赋值。ORB中Sim3边的使用方式如下(在Optimizer::OptimizeEssentialGraph中Set Loop edges)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const g2o::Sim3 Sjw = vScw[nIDj];</span><br><span class="line">const g2o::Sim3 Sji = Sjw * Swi;</span><br><span class="line"></span><br><span class="line">g2o::EdgeSim3* e = new g2o::EdgeSim3();</span><br><span class="line">e-&gt;setVertex(1, dynamic_cast&lt;g2o::OptimizableGraph::Vertex*&gt;(optimizer.vertex(nIDj)));</span><br><span class="line">e-&gt;setVertex(0, dynamic_cast&lt;g2o::OptimizableGraph::Vertex*&gt;(optimizer.vertex(nIDi)));</span><br><span class="line">e-&gt;setMeasurement(Sji);</span><br></pre></td></tr></table></figure></p>
+<p>再看线性化模型，里面的中间变量Tij应该是反了？是Tji的话才能推误差模型。  </p>
+<p>优化变量有两个：<code>$\xi_i \xi_j$</code>，所以<code>$e_{ij}$</code>要分别对两个变量求导，分别对应代码中的_jacobianOplusXi和_jacobianOplusXj  </p>
+<p>以对位姿j推导为例,对Tj左乘一个小扰动：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">T_&#123;err&#125; = T_&#123;jw&#125;^&#123;-1&#125; T_&#123;ji&#125; T_&#123;iw&#125; </span><br><span class="line">T_&#123;err&#125;(\delta\xi_&#123;j&#125;) = ( exp(\delta\xi_&#123;j&#125;)^s  T_&#123;jw&#125; )^&#123;-1&#125; T_&#123;ji&#125; T_&#123;iw&#125; = T_&#123;jw&#125;^&#123;-1&#125; exp(-\delta\xi_&#123;j&#125;)T_&#123;ji&#125; T_&#123;iw&#125;</span><br><span class="line"></span><br><span class="line">= T_&#123;jw&#125;^&#123;-1&#125;  T_&#123;ji&#125; T_&#123;iw&#125; exp( (-adj_&#123;(T_&#123;ji&#125; T_&#123;iw&#125;)^&#123;-1&#125;&#125; * \delta\xi_j) ^s)</span><br><span class="line"></span><br><span class="line">= exp((\xi_&#123;err&#125;)^s  )  exp( (-adj_&#123;(T_&#123;ji&#125; T_&#123;iw&#125;)^&#123;-1&#125;&#125;  * \delta\xi_j) ^s)</span><br><span class="line"></span><br><span class="line">= exp( (\xi_&#123;err&#125; - J^&#123;-1&#125;adj_&#123;(T_&#123;ji&#125; T_&#123;iw&#125;)^&#123;-1&#125;&#125;  * \delta\xi_j) ^s)</span><br><span class="line"></span><br><span class="line">J^&#123;-1&#125;\approx I</span><br></pre></td></tr></table></figure></p>
+<p>因此误差对位姿j的雅克比为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\frac&#123;\partial \xi_&#123;err&#125;&#125;&#123;\partial &#123;\delta \xi_&#123;j&#125;&#125; &#125; =-adj_&#123;(T_&#123;ji&#125; T_&#123;iw&#125;)^&#123;-1&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>对应代码里的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_jacobianOplusXj = -infTi_invTij.adj();</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/20/ORB-SLAM中Optimizer的优化分析及g2o点和边在ORB中的使用/" rel="next" title="ORB_SLAM中Optimizer的优化分析及g2o点和边在ORB中的使用">
+                <i class="fa fa-chevron-left"></i> ORB_SLAM中Optimizer的优化分析及g2o点和边在ORB中的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/26/SLAM或VO中两帧间匹配的方法汇总/" rel="prev" title="SLAM或VO中两帧间匹配的方法汇总">
+                SLAM或VO中两帧间匹配的方法汇总 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzU5NS8xMDE1MA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/me.png"
+                alt="Shenzhou Chen" />
+            
+              <p class="site-author-name" itemprop="name">Shenzhou Chen</p>
+              <p class="site-description motion-element" itemprop="description">博客 陈申周</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/AbnerCSZ" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chenshenzhou@zju.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/a356337092" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本结构"><span class="nav-number">1.</span> <span class="nav-text">基本结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相机位姿顶点"><span class="nav-number">2.</span> <span class="nav-text">相机位姿顶点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#路标3D点顶点"><span class="nav-number">3.</span> <span class="nav-text">路标3D点顶点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#位姿–位姿-边"><span class="nav-number">4.</span> <span class="nav-text">位姿–位姿 边</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#推导："><span class="nav-number">4.1.</span> <span class="nav-text">推导：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shenzhou Chen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
